@@ -1,4 +1,4 @@
-### cc.Chess
+### cc.Arkanoid
 
 ## Jak odpalić:
 
