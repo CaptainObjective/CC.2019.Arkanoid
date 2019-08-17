@@ -1,6 +1,6 @@
 import Paddle from './paddle';
 import Ball from './ball';
-import enLargeBall from './powerUPs/enLargeBall'
+import enLargeBall from './powerUPs/enLargeBall';
 import shrinkBall from './powerUPs/shrinkBall';
 
 export const canvas = document.querySelector('canvas');
@@ -10,8 +10,10 @@ export const ch = canvas.height;
 
 const paddle = new Paddle(cw / 2);
 const ball = new Ball(paddle.x + paddle.length / 2, paddle.height);
-const LargeBall = new enLargeBall(-100, -100);
-const SmallBall = new shrinkBall(-100, -100);
+
+const powerups = [];
+// const LargeBall = new enLargeBall(-100, -100);
+// const SmallBall = new shrinkBall(-100, -100);
 
 const gameLoop = () => {
   ctx.fillStyle = 'black';
@@ -21,13 +23,16 @@ const gameLoop = () => {
   paddle.draw();
   ball.draw();
 
-  LargeBall.draw();
-  LargeBall.fall();
-  LargeBall.hitPaddle(ball, paddle, LargeBall);
-
-  SmallBall.draw();
-  SmallBall.fall();
-  SmallBall.hitPaddle(ball, paddle, SmallBall);
+  if (powerups.length > 0) {
+    for (let powerup of powerups) {
+      powerup.draw();
+      powerup.fall();
+      powerup.hitPaddle(ball, paddle, powerup);
+    }
+  }
+  // SmallBall.draw();
+  // SmallBall.fall();
+  // SmallBall.hitPaddle(ball, paddle, SmallBall);
 
   requestAnimationFrame(gameLoop);
 };
@@ -40,14 +45,14 @@ document.addEventListener('click', e => {
 document.addEventListener('keydown', e => {
   console.log(e);
   //powrot powerupa na ekran
-  LargeBall.x = cw / 2 + 10;
-  LargeBall.y = ch / 2
+  powerups.push(new enLargeBall(cw / 2 + 10, ch / 2));
 });
 document.addEventListener('keyup', e => {
   console.log(e);
+
   //powrot powerupa na ekran
-  SmallBall.x = cw / 2 + 10;
-  SmallBall.y = ch / 2
+  // SmallBall.x = cw / 2 + 10;
+  // SmallBall.y = ch / 2
 });
 
 requestAnimationFrame(gameLoop);
