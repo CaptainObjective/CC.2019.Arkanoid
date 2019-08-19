@@ -31,8 +31,8 @@ class enLargeBall extends PowerUp {
         ctx.lineTo(this.x+14, this.y);
         ctx.fill();
     }
-    work (ball) {
-        ball.size=ball.size*1.2;
+    workWithBall (ball) {
+        ball.size *= 1.2;
     }
 }
 

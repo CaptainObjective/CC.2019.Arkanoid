@@ -31,8 +31,8 @@ class shrinkBall extends PowerUp {
         ctx.lineTo(this.x+10, this.y);
         ctx.fill();
     }
-    work (ball) {
-        ball.size=ball.size*0.8;
+    workWithBall (ball) {
+        if (ball.size>3) ball.size *= 0.8;
     }
 }
 

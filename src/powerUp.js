@@ -5,19 +5,20 @@ class PowerUp {
     this.ySpeed = 3;
     this.x = x;
     this.y = ch - y;
+    this.protect = false;
   }
   fall() {
     this.y += this.ySpeed;
   }
-  hitPaddle(ball, paddle, powerup) {
-    if (powerup.y === ch - paddle.height && powerup.x >= paddle.x && powerup.x <= paddle.x + paddle.length) {
-      powerup.work(ball);
-      //znika z ekranu
-      powerup.x = -100;
-      // powerup.__proto__ = null;
-      // powerup = null;
-      // delete powerup;
-      //te 3 linijki wyżej znalazłem w internecie, ale nie działają :(
+  work() {}
+  workWithBall() {}
+  workWithPaddle() {}
+  hitPaddle(ball, paddle) { 
+    if (this.y - (ch-paddle.height-paddle.spaceFromBorder) > 0 && this.x >= paddle.position.x && this.x <= paddle.position.x + paddle.length) {
+      this.work();
+      this.workWithBall(ball);
+      this.workWithPaddle(paddle);
+      return true;
     }
   }
 }
