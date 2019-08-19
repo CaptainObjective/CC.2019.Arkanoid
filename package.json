@@ -1,5 +1,5 @@
 {
-  "name": "cc2019.Arkanoid",
+  "name": "cc2019.arkanoid",
   "version": "1.0.0",
   "description": "Simple game in Vanilla Js",
   "main": "index.js",
@@ -19,10 +19,7 @@
   ],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "/"
-  },
-  "homepage": "/",
+  "homepage": "http:///",
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
     "core-js": "^3.2.1"

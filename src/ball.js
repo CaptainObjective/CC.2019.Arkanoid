@@ -7,11 +7,12 @@ class Ball {
     this.ySpeed = 0;
     this.x = x;
     this.y = ch - height - this.size;
+    this.speedMultiply = 1; //potrzebne do powerupa przyspieszającego i zwalniającego
   }
 
   move() {
-    this.x += this.xSpeed;
-    this.y += this.ySpeed;
+    this.x += this.xSpeed * this.speedMultiply;
+    this.y += this.ySpeed * this.speedMultiply;
   }
   draw() {
     ctx.fillStyle = 'blue';
