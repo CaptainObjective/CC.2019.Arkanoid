@@ -26,11 +26,18 @@ for (let i = 0; i <= 3; i++) {
 const gameLoop = () => {
   ctx.fillStyle = 'black';
   ctx.fillRect(0, 0, cw, ch); //tło
-  ball.move(0, 0);
-  ball.onHit();
+  if (ball.isStopped) {
+    ball.x = paddle.position.x + paddle.length / 2;
+  }
+  ball.move();
+  ball.onHit(paddle);
+
+  paddle.move();
+
   for (let i = 0; i < bricks.length; i++) {
     bricks[i].draw();
   }
+
   paddle.draw();
   ball.draw();
 
@@ -41,33 +48,39 @@ const gameLoop = () => {
       powerup.hitPaddle(ball, paddle, powerup);
     }
   }
-  // SmallBall.draw();
-  // SmallBall.fall();
-  // SmallBall.hitPaddle(ball, paddle, SmallBall);
 
-  requestAnimationFrame(gameLoop);
+  //Game end check
+  if (ball.outOfCanvas()) {
+    alert('Koniec gry, odśwież by zagrać jeszcze raz');
+  } else {
+    requestAnimationFrame(gameLoop);
+  }
 };
 
 document.addEventListener('click', e => {
-  console.log(e);
-  ball.ySpeed = -5;
-  ball.move();
+  ball.isStopped = false;
 });
-// document.addEventListener('keydown', e => {
-//   console.log(e);
-//   //powrot powerupa na ekran
-//   powerups.push(new enLargeBall(cw / 2 + 10, ch / 2));
-// });
 
 document.addEventListener('keydown', ({ keyCode }) => {
   switch (keyCode) {
     case 37:
     case 65:
-      paddle.move('LEFT');
+      paddle.setDir('LEFT');
       break;
     case 39:
     case 68:
-      paddle.move('RIGHT');
+      paddle.setDir('RIGHT');
+      break;
+  }
+});
+
+document.addEventListener('keyup', ({ keyCode }) => {
+  switch (keyCode) {
+    case 37:
+    case 65:
+    case 39:
+    case 68:
+      paddle.setDir(null);
       break;
   }
 });
