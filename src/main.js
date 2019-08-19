@@ -47,10 +47,11 @@ function collision(){
     }
   }
   for(let i = 0; i<bricks.length; i++){
-    if((ball.x-ball.size >= bricks[i].x && ball.x-ball.size <= bricks[i].x+50 && ball.y+ball.size === bricks[i].y)||
-    (ball.x-ball.size >= bricks[i].x && ball.x-ball.size <= bricks[i].x+50 && ball.y+ball.size === bricks[i].y+20)||
-    (ball.y-ball.size >= bricks[i].y && ball.y-ball.size <= bricks[i].y+20 && ball.x+ball.size === bricks[i].x)||
-    (ball.y-ball.size >= bricks[i].y && ball.y-ball.size <= bricks[i].y+20 && ball.x+ball.size === bricks[i].x+50)){
+    if((ball.x+ball.size >= bricks[i].x && ball.x+ball.size <= bricks[i].x+50 && ball.y+ball.size === bricks[i].y)||
+    (ball.x+ball.size >= bricks[i].x && ball.x+ball.size <= bricks[i].x+50 && ball.y+ball.size === bricks[i].y+20)||
+    (ball.y+ball.size >= bricks[i].y && ball.y+ball.size <= bricks[i].y+20 && ball.x+ball.size === bricks[i].x)||
+    (ball.y+ball.size >= bricks[i].y && ball.y+ball.size <= bricks[i].y+20 && ball.x+ball.size === bricks[i].x+50)){
+      
       bricks.splice(i,1);
       ball.xSpeed = -1*ball.xSpeed;
       ball.ySpeed = -1*ball.ySpeed;
