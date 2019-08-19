@@ -9,8 +9,8 @@ export const ctx = canvas.getContext('2d');
 export const cw = canvas.width;
 export const ch = canvas.height;
 
-const paddle = new Paddle(cw / 2);
-const ball = new Ball(paddle.x + paddle.length / 2, paddle.height);
+const paddle = new Paddle();
+const ball = new Ball(paddle.position.x + paddle.length / 2, paddle.height+paddle.spaceFromBorder);
 
 const powerups = [];
 // const LargeBall = new enLargeBall(-100, -100);
@@ -33,6 +33,7 @@ const gameLoop = () => {
   }
   paddle.draw();
   ball.draw();
+  paddle.move();
 
   if (powerups.length > 0) {
     for (let powerup of powerups) {
