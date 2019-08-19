@@ -7,5 +7,5 @@ body {
 }
 
 canvas {
-  border: red solid 5px;
+  outline: red solid 5px;
 }
