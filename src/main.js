@@ -27,35 +27,38 @@ for (let i = 0; i <= 3; i++) {
   }
 }
 
-function getPowerUp(x,y){
-  let num = Math.random()*10;
-  if(num>0 && num<1){
-    powerups.push(new enLargeBall(x,y));
-  }
-  else if(num>1 && num<2){
-    powerups.push(new shrinkBall(x,y));
-  }
-  else if(num>2 && num<3){
-    powerups.push(new enLargePaddle(x,y));
-  }
-  else if(num>3 && num<4){
-    powerups.push(new shrinkPaddle(x,y));
-  }
-  else if(num>4 && num<5){
-    powerups.push(new speedUpBall(x,y));
-  }
-}
-
 function collision(){
+  function getPowerUp(x,y){
+    let num = Math.random()*10;
+    if(num>0 && num<1){
+      powerups.push(new enLargeBall(x,y));
+    }
+    else if(num>1 && num<2){
+      powerups.push(new shrinkBall(x,y));
+    }
+    else if(num>2 && num<3){
+      powerups.push(new enLargePaddle(x,y));
+    }
+    else if(num>3 && num<4){
+      powerups.push(new shrinkPaddle(x,y));
+    }
+    else if(num>4 && num<5){
+      powerups.push(new speedUpBall(x,y));
+    }
+  }
   for(let i = 0; i<bricks.length; i++){
-    if(ball.x >= bricks[i].x && ball.x <= bricks[i].x+50 && ball.y === bricks[i].y){
+    if((ball.x-ball.size >= bricks[i].x && ball.x-ball.size <= bricks[i].x+50 && ball.y+ball.size === bricks[i].y)||
+    (ball.x-ball.size >= bricks[i].x && ball.x-ball.size <= bricks[i].x+50 && ball.y+ball.size === bricks[i].y+20)||
+    (ball.y-ball.size >= bricks[i].y && ball.y-ball.size <= bricks[i].y+20 && ball.x+ball.size === bricks[i].x)||
+    (ball.y-ball.size >= bricks[i].y && ball.y-ball.size <= bricks[i].y+20 && ball.x+ball.size === bricks[i].x+50)){
+      bricks.splice(i,1);
+      ball.xSpeed = -1*ball.xSpeed;
+      ball.ySpeed = -1*ball.ySpeed;
+      
       let num = Math.random();
       if(num<0.7){
         getPowerUp(bricks[i].x+25,bricks[i].y);
       }
-      bricks.splice(i,1);
-      ball.xSpeed = -1*ball.xSpeed;
-      ball.ySpeed = -1*ball.ySpeed;
   }
 }
 }
@@ -74,7 +77,7 @@ const gameLoop = () => {
   for (let i = 0; i < bricks.length; i++) {
     bricks[i].draw();
   }
-
+  collision();
   paddle.draw();
   ball.draw();
 
@@ -93,7 +96,7 @@ const gameLoop = () => {
     }
   }
   if (chain) chain.draw();
-  collision();
+  
   //Game end check
   if (ball.outOfCanvas()) {
     alert('Koniec gry, odśwież by zagrać jeszcze raz');
