@@ -5,7 +5,7 @@ class Brick{
         this.x = x;
         this.y = y;
         this.height = 20;
-        this.width = 50;
+        this.width = 60;
     }
     draw() {
         ctx.fillStyle='red';

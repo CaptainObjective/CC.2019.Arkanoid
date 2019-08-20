@@ -22,10 +22,11 @@ const powerups = [];
 let chain;
 for (let i = 0; i <= 3; i++) {
   for (let j = 0; j <= 8; j++) {
-    const brick = new Brick(30 + j * 60, 270 - i * 40);
+    const brick = new Brick(10 + j * 65, 270 - i * 40);
     bricks.push(brick);
   }
 }
+
 
 function collision(){
   function getPowerUp(x,y){
@@ -45,25 +46,34 @@ function collision(){
     else if(num>4 && num<5){
       powerups.push(new speedUpBall(x,y));
     }
+    else if(num>5 && num<6){
+      powerups.push(new speedDownBall(x,y));
+    }
+    else if(num>6 && num<7){
+      powerups.push(new rescueChain(x,y));
+    }
   }
-  for(let i = 0; i<bricks.length; i++){
-    if((ball.x+ball.size >= bricks[i].x && ball.x+ball.size <= bricks[i].x+50 && ball.y+ball.size === bricks[i].y)||
-    (ball.x+ball.size >= bricks[i].x && ball.x+ball.size <= bricks[i].x+50 && ball.y+ball.size === bricks[i].y+20)||
-    (ball.y+ball.size >= bricks[i].y && ball.y+ball.size <= bricks[i].y+20 && ball.x+ball.size === bricks[i].x)||
-    (ball.y+ball.size >= bricks[i].y && ball.y+ball.size <= bricks[i].y+20 && ball.x+ball.size === bricks[i].x+50)){
-      
+  let ballL = ball.x-ball.size;
+	let ballB = ball.y-ball.size;
+	let ballR = ball.x+ball.size;
+	let ballT = ball.y+ball.size;
+	for(var i = 0; i < bricks.length; i++){
+		let brickL = bricks[i].x;
+		let brickB = bricks[i].y;
+		let brickR = bricks[i].x+bricks[i].width;
+		let brickT = bricks[i].y+bricks[i].height;
+		if(ballR >= brickL && brickR >= ballL && ballT >= brickB && brickT >= ballB){
       bricks.splice(i,1);
       ball.xSpeed = -1*ball.xSpeed;
       ball.ySpeed = -1*ball.ySpeed;
-      
       let num = Math.random();
       if(num<0.7){
-        getPowerUp(bricks[i].x+25,bricks[i].y);
+        getPowerUp((brickL+brickR)/2,brickT);
       }
-  }
+			
+		}
+	}
 }
-}
-
 const gameLoop = () => {
   ctx.fillStyle = 'black';
   ctx.fillRect(0, 0, cw, ch); //tło
@@ -72,13 +82,11 @@ const gameLoop = () => {
   }
   ball.move();
   ball.onHit(paddle);
-
   paddle.move();
 
   for (let i = 0; i < bricks.length; i++) {
     bricks[i].draw();
   }
-  collision();
   paddle.draw();
   ball.draw();
 
@@ -97,11 +105,14 @@ const gameLoop = () => {
     }
   }
   if (chain) chain.draw();
-  
+  collision();
   //Game end check
   if (ball.outOfCanvas()) {
     alert('Koniec gry, odśwież by zagrać jeszcze raz');
-  } else {
+  } else if (bricks.length === 0){
+    alert('Gratulacje! Wygrałeś!');
+  } 
+    else{
     requestAnimationFrame(gameLoop);
   }
 };
