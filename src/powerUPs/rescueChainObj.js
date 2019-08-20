@@ -3,12 +3,14 @@ import { ctx, cw, ch } from '../main';
 //Osłona, która uratuje piłkę przed upadkiem
 class rescueChainObj {
     constructor() {
-        this.size=cw;
+        this.size = cw;
+        this.x = 0;
+        this.y = ch - 10;
     }
     draw() {
         ctx.fillStyle = 'gold';
         ctx.beginPath();
-        ctx.fillRect(0, ch-10, this.size, 5);
+        ctx.fillRect(this.x, this.y, this.size, 5);
         ctx.fill();
     }
 }

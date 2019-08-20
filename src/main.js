@@ -9,6 +9,8 @@ import speedUpBall from './powerUPs/speedUpBall';
 import speedDownBall from './powerUPs/speedDownBall';
 import rescueChain from './powerUPs/rescueChain';
 import rescueChainObj from './powerUPs/rescueChainObj';
+import speedUpPaddle from './powerUPs/speedUpPaddle';
+import speedDownPaddle from './powerUPs/speedDownPaddle';
 
 export const canvas = document.querySelector('canvas');
 export const ctx = canvas.getContext('2d');
@@ -34,23 +36,29 @@ function collision(){
     if(num>0 && num<1){
       powerups.push(new enLargeBall(x,y));
     }
-    else if(num>1 && num<2){
+    else if(num>=1 && num<2){
       powerups.push(new shrinkBall(x,y));
     }
-    else if(num>2 && num<3){
+    else if(num>=2 && num<3){
       powerups.push(new enLargePaddle(x,y));
     }
-    else if(num>3 && num<4){
+    else if(num>=3 && num<4){
       powerups.push(new shrinkPaddle(x,y));
     }
-    else if(num>4 && num<5){
+    else if(num>=4 && num<5){
       powerups.push(new speedUpBall(x,y));
     }
-    else if(num>5 && num<6){
+    else if(num>=5 && num<6){
       powerups.push(new speedDownBall(x,y));
     }
-    else if(num>6 && num<7){
+    else if(num>=6 && num<7){
       powerups.push(new rescueChain(x,y));
+    }
+    else if(num>=7 && num<8){
+      powerups.push(new speedUpPaddle(x,y));
+    }
+    else if(num>=8 && num<9){
+      powerups.push(new speedDownPaddle(x,y));
     }
   }
   let ballL = ball.x-ball.size;
@@ -100,11 +108,13 @@ const gameLoop = () => {
       if (powerup.y > ch) powerups.shift();
       if (powerup.protect) {
         chain = new rescueChainObj();
-        console.log('yay');
       }
     }
   }
-  if (chain) chain.draw();
+  if (chain) {
+    chain.draw();
+    if (ball.hitChain(chain)) chain = null;
+  }
   collision();
   //Game end check
   if (ball.outOfCanvas()) {
@@ -150,7 +160,10 @@ document.addEventListener('keydown', e => {
   //numpad6
   else if (event.keyCode === 103) powerups.push(new rescueChain(cw / 2 + 10, ch / 2));
   //numpad7
-  else if (event.keyCode === 104) chain = null; //numpad8, normalnie znika po zderzeniu z piłką
+  else if (event.keyCode === 104) powerups.push(new speedUpPaddle(cw / 2 + 10, ch / 2));
+  //numpad8
+  else if (event.keyCode === 105) powerups.push(new speedDownPaddle(cw / 2 + 10, ch / 2));
+  //numpad9
 });
 
 document.addEventListener('keyup', ({ keyCode }) => {
@@ -162,9 +175,6 @@ document.addEventListener('keyup', ({ keyCode }) => {
       paddle.setDir(null);
       break;
   }
-});
-document.addEventListener('keyup', e => {
-  console.log(powerups); //do sprawdzenia aktywnych powerupów
 });
 
 requestAnimationFrame(gameLoop);
