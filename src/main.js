@@ -120,7 +120,7 @@ const gameLoop = () => {
       powerup.draw();
       for (let ball of balls) {
         if (powerup.hitPaddle(ball, paddle)) {
-          powerups.shift();
+          powerups.splice(powerups.indexOf(powerup), 1);
         }
       }
       if (powerup.y > ch) powerups.shift();

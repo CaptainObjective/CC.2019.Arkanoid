@@ -1,11 +1,15 @@
 body {
   background-color: antiquewhite;
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
   height: 100vh;
 }
 
 canvas {
   outline: red solid 5px;
+}
+
+img {
+  margin-right: 100px;
 }
