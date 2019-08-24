@@ -6,6 +6,8 @@ class PowerUp {
     this.x = x;
     this.y = ch - y;
     this.protect = false;
+    this.addBall = false;
+    this.addLife = false;
   }
   fall() {
     this.y += this.ySpeed;

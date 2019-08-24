@@ -50,6 +50,14 @@ class Ball {
       return ((num - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min;
     }
   }
+  hitChain(chain) {
+    // const hitDown = this.y + this.size >= chain.y && this.x + this.size >= chain.x && this.x - this.size <= chain.size;
+    const hitDown = this.y + this.size >= ch - 10 && this.x + this.size >= 0 && this.x - this.size <= cw;
+    if (hitDown) {
+      this.ySpeed *= -1;
+      return true;
+    }
+  }
   outOfCanvas() {
     return this.y - this.size > ch;
   }
