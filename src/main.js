@@ -33,50 +33,50 @@ for (let i = 0; i <= 3; i++) {
 }
 balls[0].isStopped = true;
 
-function collision(){
-  function getPowerUp(x,y){
-    let num = Math.random()*11;
-    if(num>0 && num<1){
-      powerups.push(new enLargeBall(x,y));
-    } else if(num>=1 && num<2){
-      powerups.push(new shrinkBall(x,y));
-    } else if(num>=2 && num<3){
-      powerups.push(new enLargePaddle(x,y));
-    } else if(num>=3 && num<4){
-      powerups.push(new shrinkPaddle(x,y));
-    } else if(num>=4 && num<5){
-      powerups.push(new speedUpBall(x,y));
-    } else if(num>=5 && num<6){
-      powerups.push(new speedDownBall(x,y));
-    } else if(num>=6 && num<7){
-      powerups.push(new rescueChain(x,y));
-    } else if(num>=7 && num<8){
-      powerups.push(new speedUpPaddle(x,y));
-    } else if(num>=8 && num<9){
-      powerups.push(new speedDownPaddle(x,y));
-    } else if(num>=9 && num<10){
-      powerups.push(new addBall(x,y));
-    } else if(num>=10 && num<11){
-      powerups.push(new addLife(x,y));
+function collision() {
+  function getPowerUp(x, y) {
+    let num = Math.random() * 11;
+    if (num > 0 && num < 1) {
+      powerups.push(new enLargeBall(x, y));
+    } else if (num >= 1 && num < 2) {
+      powerups.push(new shrinkBall(x, y));
+    } else if (num >= 2 && num < 3) {
+      powerups.push(new enLargePaddle(x, y));
+    } else if (num >= 3 && num < 4) {
+      powerups.push(new shrinkPaddle(x, y));
+    } else if (num >= 4 && num < 5) {
+      powerups.push(new speedUpBall(x, y));
+    } else if (num >= 5 && num < 6) {
+      powerups.push(new speedDownBall(x, y));
+    } else if (num >= 6 && num < 7) {
+      powerups.push(new rescueChain(x, y));
+    } else if (num >= 7 && num < 8) {
+      powerups.push(new speedUpPaddle(x, y));
+    } else if (num >= 8 && num < 9) {
+      powerups.push(new speedDownPaddle(x, y));
+    } else if (num >= 9 && num < 10) {
+      powerups.push(new addBall(x, y));
+    } else if (num >= 10 && num < 11) {
+      powerups.push(new addLife(x, y));
     }
   }
   for (let ball of balls) {
-    let ballL = ball.x-ball.size;
-    let ballB = ball.y-ball.size;
-    let ballR = ball.x+ball.size;
-    let ballT = ball.y+ball.size;
-    for(var i = 0; i < bricks.length; i++){
+    let ballL = ball.x - ball.size;
+    let ballB = ball.y - ball.size;
+    let ballR = ball.x + ball.size;
+    let ballT = ball.y + ball.size;
+    for (var i = 0; i < bricks.length; i++) {
       let brickL = bricks[i].x;
       let brickB = bricks[i].y;
-      let brickR = bricks[i].x+bricks[i].width;
-      let brickT = bricks[i].y+bricks[i].height;
-      if(ballR >= brickL && brickR >= ballL && ballT >= brickB && brickT >= ballB){
-        bricks.splice(i,1);
-        ball.xSpeed = -1*ball.xSpeed;
-        ball.ySpeed = -1*ball.ySpeed;
+      let brickR = bricks[i].x + bricks[i].width;
+      let brickT = bricks[i].y + bricks[i].height;
+      if (ballR >= brickL && brickR >= ballL && ballT >= brickB && brickT >= ballB) {
+        bricks.splice(i, 1);
+        ball.xSpeed = -1 * ball.xSpeed;
+        ball.ySpeed = -1 * ball.ySpeed;
         let num = Math.random();
-        if(num<0.7){
-          getPowerUp((brickL+brickR)/2,brickT);
+        if (num < 0.7) {
+          getPowerUp((brickL + brickR) / 2, brickT);
         }
       }
     }
@@ -99,7 +99,7 @@ const gameLoop = () => {
     bricks[i].draw();
   }
   paddle.draw();
-  
+
   for (let i = 0; i < lives * 20; i += 20) {
     //rysowanie serc
     ctx.fillStyle = 'red';
@@ -125,7 +125,8 @@ const gameLoop = () => {
       }
       if (powerup.y > ch) powerups.shift();
       if (powerup.protect) chain = new rescueChainObj();
-      if (powerup.addBall) balls.push(new Ball(paddle.position.x + paddle.length / 2, paddle.height + paddle.spaceFromBorder))
+      if (powerup.addBall)
+        balls.push(new Ball(paddle.position.x + paddle.length / 2, paddle.height + paddle.spaceFromBorder));
       if (powerup.addLife) lives++;
     }
   }
@@ -140,16 +141,15 @@ const gameLoop = () => {
   for (let ball of balls) {
     if (ball.outOfCanvas()) {
       balls.splice(balls.indexOf(ball), 1);
-    } 
+    }
   }
-  if (balls.length<=0) {
-    if (lives>1) {
-      balls.push(new Ball(paddle.position.x + paddle.length / 2, paddle.height + paddle.spaceFromBorder))
+  if (balls.length <= 0) {
+    if (lives > 1) {
+      balls.push(new Ball(paddle.position.x + paddle.length / 2, paddle.height + paddle.spaceFromBorder));
       balls[0].isStopped = true;
       lives--;
       requestAnimationFrame(gameLoop);
-    }
-    else alert('Koniec gry, odśwież by zagrać jeszcze raz');
+    } else alert('Koniec gry, odśwież by zagrać jeszcze raz');
   } else if (bricks.length === 0) {
     alert('Gratulacje! Wygrałeś!');
   } else {
@@ -157,7 +157,9 @@ const gameLoop = () => {
   }
 };
 document.addEventListener('click', e => {
-  for (let ball of balls) {ball.isStopped = false;}
+  for (let ball of balls) {
+    ball.isStopped = false;
+  }
 });
 
 document.addEventListener('keydown', ({ keyCode }) => {

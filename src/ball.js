@@ -3,7 +3,7 @@ import { ctx, cw, ch } from './main';
 class Ball {
   constructor(x, height) {
     this.size = 10;
-    this.xSpeed = 0;
+    this.xSpeed = Math.random();
     this.ySpeed = -5;
     this.x = x;
     this.y = ch - height - this.size;
@@ -35,19 +35,12 @@ class Ball {
     if (hitPaddle) {
       const seed = this.xSpeed > 0 ? Math.random() : -Math.random();
       const fromCenter = Math.abs(this.x - paddle.position.x + paddle.length / 2 - 100);
-      const punishment = scale(fromCenter, 0, 50, 0, 2);
 
       this.ySpeed *= -1;
-
-      this.xSpeed += seed * punishment;
-      this.xSpeed *= punishment;
     } else if (hitTop) {
       this.ySpeed *= -1;
     } else if (hitLeft || hitRight) {
       this.xSpeed *= -1;
-    }
-    function scale(num, in_min, in_max, out_min, out_max) {
-      return ((num - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min;
     }
   }
   hitChain(chain) {
