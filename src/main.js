@@ -175,30 +175,6 @@ document.addEventListener('keydown', ({ keyCode }) => {
   }
 });
 
-//Tworzenie powerupów w ramach testów, do poźniejszego usunięcia
-document.addEventListener('keydown', e => {
-  if (event.keyCode === 97) powerups.push(new enLargeBall(cw / 2 + 10, ch / 2));
-  //numpad1
-  else if (event.keyCode === 98) powerups.push(new shrinkBall(cw / 2 + 10, ch / 2));
-  //numpad2
-  else if (event.keyCode === 99) powerups.push(new enLargePaddle(cw / 2 + 10, ch / 2));
-  //numpad3
-  else if (event.keyCode === 100) powerups.push(new shrinkPaddle(cw / 2 + 10, ch / 2));
-  //numpad4
-  else if (event.keyCode === 101) powerups.push(new speedUpBall(cw / 2 + 10, ch / 2));
-  //numpad5
-  else if (event.keyCode === 102) powerups.push(new speedDownBall(cw / 2 + 10, ch / 2));
-  //numpad6
-  else if (event.keyCode === 103) powerups.push(new rescueChain(cw / 2 + 10, ch / 2));
-  //numpad7
-  else if (event.keyCode === 104) powerups.push(new speedUpPaddle(cw / 2 + 10, ch / 2));
-  //numpad8
-  else if (event.keyCode === 105) powerups.push(new addLife(cw / 2 + 10, ch / 2));
-  //numpad9
-  else if (event.keyCode === 96) powerups.push(new addBall(cw / 2 + 10, ch / 2));
-  //numpad0
-});
-
 document.addEventListener('keyup', ({ keyCode }) => {
   switch (keyCode) {
     case 37:
